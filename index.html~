@@ -10,7 +10,7 @@
          const {Tray, Menu} = remote
          const path = require('path')
 
-         let trayIcon = new Tray(path.join('','/home/yashika/Desktop/1.jpg'))
+         let trayIcon = new Tray(path.join('','/home/yashika/Desktop/1.png'))
 
          const trayMenuTemplate = [
             {
