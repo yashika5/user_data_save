@@ -2,39 +2,23 @@
 <html>
    <head>
       <meta charset = "UTF-8">
-      <title>Menus</title>
+      <title>File read using system dialogs</title>
    </head>
+   
    <body>
+      <p>Press CTRL/CMD + O to open a file. </p>
       <script type = "text/javascript">
-         const {remote} = require('electron')
-         const {Tray, Menu} = remote
-         const path = require('path')
-
-         let trayIcon = new Tray(path.join('','/home/yashika/Desktop/1.png'))
-
-         const trayMenuTemplate = [
-            {
-               label: 'Empty Application',
-               enabled: false
-            },
+         const {ipcRenderer, remote} = require('electron')
+         const {globalShortcut} = remote
+         globalShortcut.register('CommandOrControl+O', () => {
+            ipcRenderer.send('openFile', () => {
+               console.log("Event sent.");
+            })
             
-            {
-               label: 'Settings',
-               click: function () {
-                  console.log("Clicked on settings")
-               }
-            },
-            
-            {
-               label: 'Help',
-               click: function () {
-                  console.log("Clicked on Help")
-               }
-            }
-         ]
-         
-         let trayMenu = Menu.buildFromTemplate(trayMenuTemplate)
-         trayIcon.setContextMenu(trayMenu)
+            ipcRenderer.on('fileData', (event, data) => {
+               document.write(data)
+            })
+         })
       </script>
    </body>
 </html>

@@ -10,13 +10,15 @@ $('#add-to-list').on('click', () => {
    fs.appendFile('contacts', name + ',' + email + '\n')
 
    addEntry(name, email)
+   $('#Name').val("");
+   $('#Email').val("");
 })
 
 function addEntry(name, email) {
    if(name && email) {
       sno++
-      let updateString = '<tr><td>'+ sno + '</td><td>'+ name +'</td><td>' 
-         + email +'</td></tr>'
+      let updateString = '<tr><td colspan="2">'+ sno + '</td><td colspan="3">'+ name +'</td><td colspan="6">' 
+         + email +'</td><td colspan="2"><button onclick="">Delete</button></td><td colspan="2"><button onclick="">Update</button></td></tr>'
       $('#contact-table').append(updateString)
    }
 }
