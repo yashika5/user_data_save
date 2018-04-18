@@ -18,7 +18,7 @@ function addEntry(name, email) {
    if(name && email) {
       sno++
       let updateString = '<tr><td colspan="2">'+ sno + '</td><td colspan="3">'+ name +'</td><td colspan="6">' 
-         + email +'</td><td colspan="2"><button onclick="">Delete</button></td><td colspan="2"><button onclick="">Update</button></td></tr>'
+         + email +'</td><td colspan="2"><button id="d'+ sno +'" onclick="deleteentry(sno)">Delete</button></td><td colspan="2"><button id="u'+ sno + '" onclick="updateentry(sno)">Update</button></td></tr>'
       $('#contact-table').append(updateString)
    }
 }
@@ -41,6 +41,21 @@ function loadAndDisplayContacts() {
             console.log(err)
       })
    }
+}
+
+function deleteentry(no){
+   console.log("deleted")
+   if(fs.existsSync(filename)) {
+      let data = fs.readFileSync(filename, 'utf8').split('\n')
+      let s = no - 1
+      let entry = data[s]
+      let [ name, email ] = entry.split(',')
+      console.log(name + email)
+   }
+}
+
+function updateentry(sno){
+    console.log("updated")
 }
 
 loadAndDisplayContacts()
