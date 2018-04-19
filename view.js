@@ -12,13 +12,16 @@ $('#add-to-list').on('click', () => {
    addEntry(name, email)
    $('#Name').val("");
    $('#Email').val("");
+
+   const {dialog} = require('electron').remote
+   dialog.showSaveDialog()
 })
 
 function addEntry(name, email) {
    if(name && email) {
       sno++
-      let updateString = '<tr><td colspan="2">'+ sno + '</td><td colspan="3">'+ name +'</td><td colspan="6">' 
-         + email +'</td><td colspan="2"><button id="d'+ sno +'" onclick="deleteentry(sno)">Delete</button></td><td colspan="2"><button id="u'+ sno + '" onclick="updateentry(sno)">Update</button></td></tr>'
+      let updateString = '<tr id="'+sno+'"><td colspan="2">'+ sno + '</td><td colspan="3">'+ name +'</td><td colspan="6">' 
+         + email +'</td><td colspan="2"><button onclick="deleteentry('+sno+')">Delete</button></td></tr>'
       $('#contact-table').append(updateString)
    }
 }
@@ -43,19 +46,21 @@ function loadAndDisplayContacts() {
    }
 }
 
-function deleteentry(no){
+function deleteentry(sno){
    console.log("deleted")
    if(fs.existsSync(filename)) {
-      let data = fs.readFileSync(filename, 'utf8').split('\n')
-      let s = no - 1
-      let entry = data[s]
-      let [ name, email ] = entry.split(',')
-      console.log(name + email)
+      let data = fs.readFileSync(filename, 'utf8')
+      let entries = data.split('\n')
+      let s = sno -1
+      entries[s] = ""
+      data = entries.join('\n')
+      fs.writeFile('contacts', data,  function(err) {
+         if (err) {
+            return console.error(err);
+         }
+      })
    }
 }
 
-function updateentry(sno){
-    console.log("updated")
-}
 
 loadAndDisplayContacts()
