@@ -2,8 +2,9 @@
   "name": "hello-world",
   "version": "1.0.0",
   "description": "sample electron apllication",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+    "start": "electron ./main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "yashika",
@@ -17,5 +18,13 @@
   },
   "devDependencies": {
     "electron-rebuild": "^1.7.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yashika5/user_data_save.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yashika5/user_data_save/issues"
+  },
+  "homepage": "https://github.com/yashika5/user_data_save#readme"
 }

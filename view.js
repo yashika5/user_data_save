@@ -17,8 +17,8 @@ $('#add-to-list').on('click', () => {
 function addEntry(name, email) {
    if(name && email) {
       sno++
-      let updateString = '<tr><td colspan="2">'+ sno + '</td><td colspan="3">'+ name +'</td><td colspan="6">' 
-         + email +'</td><td colspan="2"><button onclick="deleteentry('+sno+')" class="btnDelete">Delete</button></td></tr>'
+      let updateString = '<tr><td colspan="2">'+ sno + '</td><td colspan="5">'+ name +'</td><td colspan="10">' 
+         + email +'</td><td colspan="4"><button onclick="deleteentry('+sno+')" class="btnDelete">Delete</button></td><td colspan="4"><button onclick="updateentry('+sno+')" class="btnUpdate">Update</button></td></tr>'
       $('#contact-table').append(updateString)
    }
 }
@@ -49,7 +49,26 @@ function deleteentry(sno){
       let data = fs.readFileSync(filename, 'utf8')
       let entries = data.split('\n')
       let s = sno -1
+      console.log(entries[s])
       entries[s] = ""
+      data = entries.join('\n')
+      fs.writeFile('contacts', data,  function(err) {
+         if (err) {
+            return console.error(err);
+         }
+      })
+   }
+}
+
+function updateentry(sno,name){
+   console.log("updated "+name)
+   if(fs.existsSync(filename)) {
+      let data = fs.readFileSync(filename, 'utf8')
+      let entries = data.split('\n')
+      let s = sno -1
+      console.log(entries[s])
+      let [n,e] = entries[s].split(',')
+      console.log(n+ " "+e)
       data = entries.join('\n')
       fs.writeFile('contacts', data,  function(err) {
          if (err) {
