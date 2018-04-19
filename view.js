@@ -12,16 +12,13 @@ $('#add-to-list').on('click', () => {
    addEntry(name, email)
    $('#Name').val("");
    $('#Email').val("");
-
-   const {dialog} = require('electron').remote
-   dialog.showSaveDialog()
 })
 
 function addEntry(name, email) {
    if(name && email) {
       sno++
-      let updateString = '<tr id="'+sno+'"><td colspan="2">'+ sno + '</td><td colspan="3">'+ name +'</td><td colspan="6">' 
-         + email +'</td><td colspan="2"><button onclick="deleteentry('+sno+')">Delete</button></td></tr>'
+      let updateString = '<tr><td colspan="2">'+ sno + '</td><td colspan="3">'+ name +'</td><td colspan="6">' 
+         + email +'</td><td colspan="2"><button onclick="deleteentry('+sno+')" class="btnDelete">Delete</button></td></tr>'
       $('#contact-table').append(updateString)
    }
 }
@@ -61,6 +58,10 @@ function deleteentry(sno){
       })
    }
 }
+
+$("#contact-table").on('click', '.btnDelete', function () {
+         $(this).closest('tr').remove();
+});
 
 
 loadAndDisplayContacts()
